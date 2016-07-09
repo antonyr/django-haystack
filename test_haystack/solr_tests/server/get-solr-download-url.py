@@ -23,13 +23,4 @@ tarball = 'solr-{0}.tgz'.format(solr_version)
 dist_path = 'lucene/solr/{0}/{1}'.format(solr_version, tarball)
 
 download_url = urljoin('http://archive.apache.org/dist/', dist_path)
-mirror_response = requests.get("http://www.apache.org/dyn/mirrors/mirrors.cgi/%s?asjson=1" % dist_path)
-
-if mirror_response.ok:
-    mirror_data = mirror_response.json()
-    download_url = urljoin(mirror_data['preferred'], mirror_data['path_info'])
-    # The Apache mirror script's response format has recently changed to exclude the actual file paths:
-    if not download_url.endswith(tarball):
-        download_url = urljoin(download_url, dist_path)
-
 print(download_url)
